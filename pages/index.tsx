@@ -22,8 +22,28 @@ import {
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu"; // Correct import path
 import Image from "next/image"; // Import Next.js Image component
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card } from "@/components/ui/card";
 
 export default function Home() {
+  const form = useForm();
+
+  function onSubmit(data: any) {
+    console.log(data); // Replace with actual form submission logic (e.g., API call)
+    alert(JSON.stringify(data));
+  }
+
   return (
     <>
       <Head>
@@ -40,19 +60,78 @@ export default function Home() {
         {/* Hero Section */}
         <header className="relative bg-gradient-to-r from-[#c94b4b] to-[#e88146] text-white px-6 py-16 lg:py-24">
           <div className="max-w-6xl mx-auto">
-            <div className="max-w-2xl">
-              <h1 className="text-4xl lg:text-5xl font-bold mb-6">
-                Ignite sales with our expert CRM consultancy services
-              </h1>
-              <p className="text-lg mb-8 opacity-90">
-                With a focus on digital transformation and sales performance
-                improvement, we help businesses by providing strategic advice
-                and tailored guidance to get their business processes working
-                and drive revenue growth through the use of a CRM system.
-              </p>
-              <Button variant="secondary" size="lg" className="font-semibold">
-                Talk to a specialist
-              </Button>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Hero Content */}
+              <div className="max-w-2xl">
+                <h1 className="text-4xl lg:text-5xl font-bold mb-6">
+                  Ignite sales with our expert CRM consultancy services
+                </h1>
+                <p className="text-lg mb-8 opacity-90">
+                  With a focus on digital transformation and sales performance
+                  improvement, we help businesses by providing strategic advice
+                  and tailored guidance to get their business processes working
+                  and drive revenue growth through the use of a CRM system.
+                </p>
+                {/* Removed Button */}
+              </div>
+
+              {/* Contact Form */}
+              <div className="md:pl-12">
+                <Card className="p-6 rounded-lg shadow-lg bg-white text-black">
+                  <h2 className="text-2xl font-semibold mb-4 text-gray-900">
+                    Contact Us
+                  </h2>
+                  <Form {...form}>
+                    <form
+                      onSubmit={form.handleSubmit(onSubmit)}
+                      className="space-y-4"
+                    >
+                      <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Your Name" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Your Email" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="message"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Message</FormLabel>
+                            <FormControl>
+                              <Textarea placeholder="Your Message" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button type="submit" className="w-full">
+                        Send Message
+                      </Button>
+                    </form>
+                  </Form>
+                </Card>
+              </div>
             </div>
           </div>
         </header>
